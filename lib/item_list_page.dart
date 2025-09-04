@@ -1,6 +1,11 @@
-import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+/* 
+상품 목록 페이지 
+*/
+
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/material.dart';
+import 'package:shoppingmall/constants.dart';
+import 'package:shoppingmall/item_details_page.dart';
 import 'package:shoppingmall/models/product.dart';
 
 class ItemListPage extends StatefulWidget {
@@ -11,9 +16,6 @@ class ItemListPage extends StatefulWidget {
 }
 
 class _ItemListPageState extends State<ItemListPage> {
-  // 숫자 포맷 설정
-  final NumberFormat numberFormat = NumberFormat('###,###,###');
-
   // db 대용으로 사용할 더미 데이터
   List<Product> productList = [
     Product(
@@ -67,6 +69,7 @@ class _ItemListPageState extends State<ItemListPage> {
         ),
         itemBuilder: (context, index) {
           return productContainer(
+            productNo: productList[index].productNo ?? 0,
             productName: productList[index].productName ?? "",
             productImageUrl: productList[index].productImageUrl ?? "",
             price: productList[index].price ?? 0,
@@ -78,41 +81,59 @@ class _ItemListPageState extends State<ItemListPage> {
 
   // 상품 컨테이터
   Widget productContainer({
+    required int productNo,
     required String productName,
     required String productImageUrl,
     required double price,
   }) {
-    return Container(
-      padding: const EdgeInsets.all(5),
-      child: Column(
-        children: [
-          CachedNetworkImage(
-            height: 150,
-            fit: BoxFit.cover,
-            imageUrl: productImageUrl,
-            placeholder: (context, url) {
-              return const Center(
-                child: CircularProgressIndicator(strokeWidth: 2),
+    return GestureDetector(
+      // 터치 시 상품 상세 페이지로 이동
+      onTap: () {
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) {
+              return ItemDetailsPage(
+                productNo: productNo,
+                productName: productName,
+                productImageUrl: productImageUrl,
+                price: price,
               );
             },
-            errorWidget: (context, url, error) {
-              return const Center(child: Text("오류 발생"));
-            },
           ),
-          // 상품명
-          Container(
-            padding: const EdgeInsets.all(8),
-            child: Text(
-              productName,
-              style: const TextStyle(fontWeight: FontWeight.bold),
+        );
+      },
+      child: Container(
+        padding: const EdgeInsets.all(5),
+        child: Column(
+          children: [
+            CachedNetworkImage(
+              height: 150,
+              fit: BoxFit.cover,
+              imageUrl: productImageUrl,
+              placeholder: (context, url) {
+                return const Center(
+                  child: CircularProgressIndicator(strokeWidth: 2),
+                );
+              },
+              errorWidget: (context, url, error) {
+                return const Center(child: Text("오류 발생"));
+              },
             ),
-          ),
-          //상품 가격
-          Container(
-            padding: const EdgeInsets.all(10),
-            child: Text("${numberFormat.format(price)}원"),
-          ),
-        ],
+            // 상품명
+            Container(
+              padding: const EdgeInsets.all(8),
+              child: Text(
+                productName,
+                style: const TextStyle(fontWeight: FontWeight.bold),
+              ),
+            ),
+            //상품 가격
+            Container(
+              padding: const EdgeInsets.all(10),
+              child: Text("${numberFormat.format(price)}원"),
+            ),
+          ],
+        ),
       ),
     );
   }
