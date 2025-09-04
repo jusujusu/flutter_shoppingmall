@@ -3,7 +3,7 @@ class Product {
   int? productNo;
   String? productName;
   String? productDetails;
-  String? productImageUrl;
+  String? productImageUrl;  // 리스트로 만들어야 하지만 일단은 이미지 한개로만
   double? price;
 
   // 생성자
