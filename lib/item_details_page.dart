@@ -5,7 +5,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:shoppingmall/constants.dart';
-import 'package:shoppingmall/models/product.dart';
+import 'package:shoppingmall/item_basket_page.dart';
 
 class ItemDetailsPage extends StatefulWidget {
   // 받아올 상품 정보
@@ -25,7 +25,8 @@ class ItemDetailsPage extends StatefulWidget {
   });
 
   @override
-  State<ItemDetailsPage> createState() => _ItemDetailsPageState();
+  State<ItemDetailsPage> createState() =>
+      _ItemDetailsPageState();
 }
 
 class _ItemDetailsPageState extends State<ItemDetailsPage> {
@@ -47,12 +48,15 @@ class _ItemDetailsPageState extends State<ItemDetailsPage> {
               alignment: Alignment.center,
               padding: const EdgeInsets.all(15),
               child: CachedNetworkImage(
-                width: MediaQuery.of(context).size.width * 0.8,
+                width:
+                    MediaQuery.of(context).size.width * 0.8,
                 fit: BoxFit.cover,
                 imageUrl: widget.productImageUrl,
                 placeholder: (context, url) {
                   return const Center(
-                    child: CircularProgressIndicator(strokeWidth: 2),
+                    child: CircularProgressIndicator(
+                      strokeWidth: 2,
+                    ),
                   );
                 },
                 errorWidget: (context, url, error) {
@@ -63,17 +67,23 @@ class _ItemDetailsPageState extends State<ItemDetailsPage> {
 
             // 상품 이름
             Container(
-              padding: const EdgeInsets.symmetric(vertical: 20),
+              padding: const EdgeInsets.symmetric(
+                vertical: 20,
+              ),
               child: Text(
                 widget.productName,
                 textScaler: TextScaler.linear(1.5),
-                style: const TextStyle(fontWeight: FontWeight.bold),
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
 
             // 상품 가격
             Container(
-              padding: const EdgeInsets.symmetric(vertical: 20),
+              padding: const EdgeInsets.symmetric(
+                vertical: 20,
+              ),
               child: Text(
                 "${numberFormat.format(widget.price)}원",
                 textScaler: TextScaler.linear(1.3),
@@ -86,7 +96,21 @@ class _ItemDetailsPageState extends State<ItemDetailsPage> {
       // 장바구니 담기 버튼
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.all(20),
-        child: FilledButton(onPressed: () {}, child: const Text("장바구니 담기")),
+        child: FilledButton(
+          onPressed: () {
+            // 장바구니 담는 로직 추후에 추가
+
+            // 장바구니 페이지로 이동
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) {
+                  return const ItemBasketPage();
+                },
+              ),
+            );
+          },
+          child: const Text("장바구니 담기"),
+        ),
       ),
     );
   }

@@ -1,5 +1,8 @@
 /* 
 상품 목록 페이지 
+
+상품 목록 데이터를 gridview 형식으로 나타냄
+상품 탭 시 상품 상세 페이지로 이동
 */
 
 import 'package:cached_network_image/cached_network_image.dart';
@@ -27,31 +30,36 @@ class _ItemListPageState extends State<ItemListPage> {
     Product(
       productNo: 2,
       productName: "스마트폰(Phone)",
-      productImageUrl: "https://picsum.photos/id/20/300/300",
+      productImageUrl:
+          "https://picsum.photos/id/20/300/300",
       price: 500000,
     ),
     Product(
       productNo: 3,
       productName: "머그컵(Cup)",
-      productImageUrl: "https://picsum.photos/id/30/300/300",
+      productImageUrl:
+          "https://picsum.photos/id/30/300/300",
       price: 15000,
     ),
     Product(
       productNo: 4,
       productName: "키보드(Keyboard)",
-      productImageUrl: "https://picsum.photos/id/60/300/300",
+      productImageUrl:
+          "https://picsum.photos/id/60/300/300",
       price: 50000,
     ),
     Product(
       productNo: 5,
       productName: "포도(Grape)",
-      productImageUrl: "https://picsum.photos/id/75/200/300",
+      productImageUrl:
+          "https://picsum.photos/id/75/200/300",
       price: 75000,
     ),
     Product(
       productNo: 6,
       productName: "책(book)",
-      productImageUrl: "https://picsum.photos/id/24/200/300",
+      productImageUrl:
+          "https://picsum.photos/id/24/200/300",
       price: 24000,
     ),
   ];
@@ -59,19 +67,25 @@ class _ItemListPageState extends State<ItemListPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("제품 리스트"), centerTitle: true),
+      appBar: AppBar(
+        title: const Text("제품 리스트"),
+        centerTitle: true,
+      ),
       body: GridView.builder(
         itemCount: productList.length,
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          childAspectRatio: 0.9,
-          crossAxisCount: 2, // 몇 개를 둘 것인지
-          mainAxisExtent: 250,
-        ),
+        gridDelegate:
+            const SliverGridDelegateWithFixedCrossAxisCount(
+              childAspectRatio: 0.9,
+              crossAxisCount: 2, // 몇 개를 둘 것인지
+              mainAxisExtent: 250,
+            ),
         itemBuilder: (context, index) {
           return productContainer(
             productNo: productList[index].productNo ?? 0,
-            productName: productList[index].productName ?? "",
-            productImageUrl: productList[index].productImageUrl ?? "",
+            productName:
+                productList[index].productName ?? "",
+            productImageUrl:
+                productList[index].productImageUrl ?? "",
             price: productList[index].price ?? 0,
           );
         },
@@ -112,7 +126,9 @@ class _ItemListPageState extends State<ItemListPage> {
               imageUrl: productImageUrl,
               placeholder: (context, url) {
                 return const Center(
-                  child: CircularProgressIndicator(strokeWidth: 2),
+                  child: CircularProgressIndicator(
+                    strokeWidth: 2,
+                  ),
                 );
               },
               errorWidget: (context, url, error) {
@@ -124,7 +140,9 @@ class _ItemListPageState extends State<ItemListPage> {
               padding: const EdgeInsets.all(8),
               child: Text(
                 productName,
-                style: const TextStyle(fontWeight: FontWeight.bold),
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
             //상품 가격
