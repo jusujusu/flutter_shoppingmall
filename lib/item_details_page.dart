@@ -14,6 +14,8 @@ class ItemDetailsPage extends StatefulWidget {
   String productImageUrl;
   double price;
 
+  // ItemDetailsPage 위젯의 생성자
+  // 위젯이 생성될 때 외부로부터 필요한 초기 데이터(상품 정보)를 전달받는 역할을 합니다.
   ItemDetailsPage({
     super.key,
     required this.productNo,
